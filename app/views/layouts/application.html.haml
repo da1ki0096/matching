@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Sirius
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    %p.notice= notice
+    %p.alert= alert
+    - if user_signed_in?
+      ログインユーザー： #{current_user.email}
+      \#{link_to 'アカウント変更', edit_user_registration_path}
+      \#{link_to "ログアウト", destroy_user_session_path}
+    - else
+      = link_to "TOP画面", root_path
+      = link_to "新規作成", new_user_registration_path
+      = link_to "ログイン", new_user_session_path
+    = yield
