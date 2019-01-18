@@ -7,5 +7,13 @@
       %ul
         - group.errors.full_messages.each do |message|
           %li= message
+  .form-group
+    %label{ for: 'name'}
+      groupname
+    = form.text_field :name, type: 'text', id: 'name', class:'form-control'
+  .form-group
+    %label{ for: 'public'}
+      公開する
+    = form.check_box :public, as: :boolean, id: 'public', class:'form-check-input'
   .actions
     = form.submit
