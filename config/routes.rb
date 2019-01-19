@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'group_members/index'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   get 'home/index'
   devise_for :users
