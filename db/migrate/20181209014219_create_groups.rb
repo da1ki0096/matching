@@ -3,7 +3,6 @@ class CreateGroups < ActiveRecord::Migration[5.2]
     create_table :groups do |t|
       t.string :name, null: false
       t.boolean :public, default: true, null: false
-      t.references :user
 
       t.timestamps
     end

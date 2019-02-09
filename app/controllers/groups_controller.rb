@@ -1,10 +1,11 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_group, only: [:show, :edit, :update, :destroy, :join]
 
   # GET /groups
   # GET /groups.json
   def index
     @groups = Group.all
+    @groupids = current_user.group_members.map(&:group_id)
   end
 
   # GET /groups/1
@@ -25,7 +26,6 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(group_params)
-    @group.user = current_user
     respond_to do |format|
       if @group.save
         group_member = GroupMember.new(user_id: current_user.id, group_id: @group.id, admin: true, master: true)
@@ -61,6 +61,12 @@ class GroupsController < ApplicationController
       format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def join
+    group_member = GroupMember.new(user_id: current_user.id, group_id: @group.id, admin: false, master: false)
+    group_member.save
+    redirect_to @group, notice: 'グループに参加しました.'
   end
 
   private
