@@ -1,21 +1,23 @@
 %h1 Message#index
-%ul
+%ul#chat-index
   - @messages.each do |m|
     %li
       = m.content
-= form_with(url: group_messages_path(group_id: @message.group_id), scope: :post) do |form|
-  - if @message.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@message.errors.count, "error")
-        prohibited this group from being saved:
-      %ul
-        - @message.errors.full_messages.each do |message|
-          %li= message
-  .form-group
-    %label{ for: 'contents'}
-      contents
-    = form.text_field :content, type: 'text', id: 'contents', class:'form-control'
-  .actions
-    = form.submit
-%p Find me in app/views/chat/index.html.haml
+%input#contents{ type: 'text', 'data-behavior': 'message_post'}
+/
+  = form_with(url: group_messages_path(group_id: @message.group_id), scope: :post) do |form|
+    - if @message.errors.any?
+      #error_explanation
+        %h2
+          = pluralize(@message.errors.count, "error")
+          prohibited this group from being saved:
+        %ul
+          - @message.errors.full_messages.each do |message|
+            %li= message
+    .form-group
+      %label{ for: 'contents'}
+        contents
+      = form.text_field :content, type: 'text', id: 'contents', class:'form-control', 'data-behavior' => 'message_post'
+    .actions
+      = form.submit
+  %p Find me in app/views/chat/index.html.haml
